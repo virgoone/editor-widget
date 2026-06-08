@@ -91,9 +91,31 @@ Outputs:
 - `dist/index.d.ts`
 - `dist/web-component.d.ts`
 
+## GitHub Packages
+
+The package is published as `@virgoone/editor-widget` on GitHub Packages.
+
+Install from a project that can read `virgoone` packages:
+
+```ini
+@virgoone:registry=https://npm.pkg.github.com
+```
+
+```bash
+bun add @virgoone/editor-widget
+```
+
+Publish a new version by bumping `package.json`, committing it, and pushing a matching tag:
+
+```bash
+npm version patch
+git push origin main --follow-tags
+```
+
+The publish workflow only runs for tags matching `v*`. It verifies the tag matches `package.json` before running `npm publish`.
+
 ## Roadmap
 
 - Publish versioned ESM bundles to GitHub Releases or R2 for direct CDN loading.
-- Add a GitHub Packages release workflow.
 - Migrate the full Plate-based Bunship editor into this package behind the same API.
 - Add upload, AI command, slash menu, and media integrations through explicit config.
