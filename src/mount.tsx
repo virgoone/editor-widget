@@ -1,8 +1,13 @@
+import { createElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { BunshipEditor } from "./BunshipEditor";
+
+import { FullEditor } from "./full-editor";
 import type { EditorApi, EditorOptions, MountedEditor } from "./types";
 
-export function mountEditor(container: Element, options: EditorOptions = {}): MountedEditor {
+export function mountEditor(
+  container: Element,
+  options: EditorOptions = {},
+): MountedEditor {
   let reactRoot: Root | null = null;
   let editorApi: EditorApi | null = null;
 
@@ -14,18 +19,18 @@ export function mountEditor(container: Element, options: EditorOptions = {}): Mo
       reactRoot?.unmount();
       reactRoot = null;
       editorApi = null;
-    }
+    },
   };
 
   reactRoot = createRoot(container);
   reactRoot.render(
-    <BunshipEditor
-      {...options}
-      onReady={(api) => {
+    createElement(FullEditor, {
+      ...options,
+      onReady: (api) => {
         editorApi = api;
         options.onReady?.(instance);
-      }}
-    />
+      },
+    }),
   );
 
   return instance;

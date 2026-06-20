@@ -1,14 +1,51 @@
 import { createElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { BunshipEditor } from "./BunshipEditor";
-import type { EditorApi, EditorOptions, EditorStylePreset, EditorTheme, EditorValue } from "./types";
+
+import { FullEditor } from "./full-editor";
+import type {
+  EditorApi,
+  EditorOptions,
+  EditorStylePreset,
+  EditorTheme,
+  EditorValue,
+} from "./types";
 import { cloneValue, normalizeValue } from "./value";
-import styles from "./styles.css?inline";
 
 const tagName = "bunship-editor";
+const STYLE_ID = "bunship-editor-widget-styles";
+
+/**
+ * The full Plate editor renders Radix/Plate portals (toolbars, menus,
+ * popovers) to `document.body`, so the widget renders in the light DOM and
+ * loads its compiled stylesheet (the sibling `style.css` produced by the
+ * build) into `<head>` once. Shadow DOM would leave those portals unstyled.
+ */
+function ensureStyles() {
+  if (typeof document === "undefined") return;
+  if (document.getElementById(STYLE_ID)) return;
+  try {
+    const href = new URL("./style.css", import.meta.url).href;
+    const link = document.createElement("link");
+    link.id = STYLE_ID;
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+  } catch {
+    // import.meta.url unavailable (e.g. dev); styles are injected by the bundler.
+  }
+}
 
 class BunshipEditorElement extends HTMLElement {
-  static observedAttributes = ["value", "readonly", "placeholder", "theme", "style-preset", "accent-color"];
+  static observedAttributes = [
+    "readonly",
+    "placeholder",
+    "theme",
+    "style-preset",
+    "accent-color",
+    "upload-api",
+    "upload-url-base",
+    "min-height",
+  ];
 
   private root: Root | null = null;
   private editorApi: EditorApi | null = null;
@@ -16,14 +53,12 @@ class BunshipEditorElement extends HTMLElement {
   private currentValue: EditorValue | string | undefined;
 
   connectedCallback() {
-    if (!this.shadowRoot) {
-      const shadow = this.attachShadow({ mode: "open" });
-      const style = document.createElement("style");
-      style.textContent = styles;
+    ensureStyles();
+    if (!this.mountNode) {
       this.mountNode = document.createElement("div");
-      shadow.append(style, this.mountNode);
+      this.mountNode.style.display = "block";
+      this.appendChild(this.mountNode);
     }
-
     this.render();
   }
 
@@ -37,14 +72,17 @@ class BunshipEditorElement extends HTMLElement {
     this.render();
   }
 
-  get value() {
+  get value(): EditorValue {
     return this.editorApi?.getValue() ?? normalizeValue(this.currentValue);
   }
 
   set value(nextValue: EditorValue | string) {
     this.currentValue = nextValue;
-    this.editorApi?.setValue(nextValue);
-    this.render();
+    if (this.editorApi) {
+      this.editorApi.setValue(nextValue);
+    } else {
+      this.render();
+    }
   }
 
   focus() {
@@ -52,44 +90,52 @@ class BunshipEditorElement extends HTMLElement {
   }
 
   private getOptions(): EditorOptions {
-    const value = this.currentValue ?? this.getAttribute("value") ?? undefined;
-    const theme = (this.getAttribute("theme") ?? "system") as EditorTheme;
-    const stylePreset = (this.getAttribute("style-preset") ?? "fluxship") as EditorStylePreset;
     const accent = this.getAttribute("accent-color") ?? undefined;
+    const minHeightAttr = this.getAttribute("min-height");
+    const minHeight = minHeightAttr ? Number(minHeightAttr) : undefined;
 
     return {
-      value,
+      value: this.currentValue ?? this.getAttribute("value") ?? undefined,
       readOnly: this.hasAttribute("readonly"),
       placeholder: this.getAttribute("placeholder") ?? undefined,
-      theme,
-      stylePreset,
+      theme: (this.getAttribute("theme") ?? "system") as EditorTheme,
+      stylePreset: (this.getAttribute("style-preset") ??
+        "fluxship") as EditorStylePreset,
       tokens: accent ? { accent } : undefined,
+      minHeight: Number.isFinite(minHeight) ? minHeight : undefined,
+      upload: {
+        api: this.getAttribute("upload-api") ?? undefined,
+        urlBase: this.getAttribute("upload-url-base") ?? undefined,
+        credentials: "include",
+      },
       onChange: (nextValue) => {
         this.currentValue = cloneValue(nextValue);
         this.dispatchEvent(
           new CustomEvent("change", {
             bubbles: true,
             composed: true,
-            detail: { value: cloneValue(nextValue) }
-          })
+            detail: { value: cloneValue(nextValue) },
+          }),
         );
       },
       onReady: (api) => {
         this.editorApi = api;
-        this.dispatchEvent(new CustomEvent("ready", { bubbles: true, composed: true }));
-      }
+        this.dispatchEvent(
+          new CustomEvent("ready", { bubbles: true, composed: true }),
+        );
+      },
     };
   }
 
   private render() {
-    if (!this.isConnected || !this.shadowRoot || !this.mountNode) return;
-
+    if (!this.isConnected || !this.mountNode) return;
     this.root ??= createRoot(this.mountNode);
-    this.root.render(createElement(BunshipEditor, this.getOptions()));
+    this.root.render(createElement(FullEditor, this.getOptions()));
   }
 }
 
 export function defineBunshipEditor(customTagName = tagName) {
+  if (typeof window === "undefined") return;
   if (!customElements.get(customTagName)) {
     customElements.define(customTagName, BunshipEditorElement);
   }

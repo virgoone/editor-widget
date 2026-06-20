@@ -1,56 +1,50 @@
-import { StrictMode, useState } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BunshipEditor } from "./BunshipEditor";
-import type { EditorStylePreset, EditorTheme, EditorValue } from "./types";
+
+import { FullEditor } from "./full-editor";
+import type { EditorValue } from "./types";
 
 const initialValue: EditorValue = [
-  {
-    type: "h2",
-    children: [{ text: "Ship editor widget", bold: true }]
-  },
+  { type: "h1", children: [{ text: "Bunship Editor Widget" }] },
   {
     type: "p",
-    children: [{ text: "A standalone editor surface that can run as ESM or a Web Component." }]
+    children: [
+      { text: "A standalone " },
+      { text: "Plate", bold: true },
+      { text: " editor that runs as an ESM SDK or a " },
+      { text: "<bunship-editor>", code: true },
+      { text: " Web Component, loaded from a CDN." },
+    ],
   },
   {
     type: "blockquote",
-    children: [{ text: "Theme and style presets are owned by the widget, not by the host app." }]
-  }
+    children: [{ text: "Theme, styles and upload are owned by the widget." }],
+  },
+  { type: "h2", children: [{ text: "Try it" }] },
+  {
+    type: "p",
+    children: [
+      { text: "Use the toolbar, press " },
+      { text: "/", code: true },
+      { text: " for the slash menu, or drop an image to upload." },
+    ],
+  },
 ];
 
 function Demo() {
-  const [theme, setTheme] = useState<EditorTheme>("system");
-  const [stylePreset, setStylePreset] = useState<EditorStylePreset>("fluxship");
-  const [value, setValue] = useState<EditorValue>(initialValue);
-
   return (
-    <main className="demo-shell">
-      <section className="demo-header">
-        <div>
-          <p>Editor Widget</p>
-          <h1>Standalone rich text surface</h1>
-        </div>
-        <div className="demo-controls">
-          <label>
-            Theme
-            <select value={theme} onChange={(event) => setTheme(event.target.value as EditorTheme)}>
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
-          <label>
-            Style
-            <select value={stylePreset} onChange={(event) => setStylePreset(event.target.value as EditorStylePreset)}>
-              <option value="fluxship">Fluxship</option>
-              <option value="shadcn">shadcn</option>
-              <option value="minimal">Minimal</option>
-            </select>
-          </label>
-        </div>
-      </section>
-
-      <BunshipEditor value={value} theme={theme} stylePreset={stylePreset} onChange={setValue} />
+    <main style={{ maxWidth: 960, margin: "0 auto", padding: 24 }}>
+      <FullEditor
+        value={initialValue}
+        theme="light"
+        stylePreset="fluxship"
+        upload={{ api: "/api/media/upload", urlBase: "/api/media/object" }}
+        minHeight={560}
+        onChange={(value) => {
+          // eslint-disable-next-line no-console
+          console.log("change", value);
+        }}
+      />
     </main>
   );
 }
@@ -58,5 +52,5 @@ function Demo() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Demo />
-  </StrictMode>
+  </StrictMode>,
 );

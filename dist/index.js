@@ -1,21 +1,29 @@
-import { a as e, i as t, n, o as r, r as i, s as a, t as o } from "./chunks/client-4Scz1xLl.js";
-//#region src/mount.tsx
-var s = o(), c = a();
-function l(e, t = {}) {
-	let r = null, i = null, a = {
-		getValue: () => i?.getValue() ?? [],
-		setValue: (e) => i?.setValue(e),
-		focus: () => i?.focus(),
-		destroy: () => {
-			r?.unmount(), r = null, i = null;
-		}
-	};
-	return r = (0, s.createRoot)(e), r.render(/* @__PURE__ */ (0, c.jsx)(n, {
-		...t,
-		onReady: (e) => {
-			i = e, t.onReady?.(a);
-		}
-	})), a;
+import { c as n, r as u, F as s } from "./chunks/client-DeHBg55h.js";
+import { a as V, b as f, n as p } from "./chunks/client-DeHBg55h.js";
+function i(r, l = {}) {
+  let t = null, e = null;
+  const o = {
+    getValue: () => e?.getValue() ?? [],
+    setValue: (a) => e?.setValue(a),
+    focus: () => e?.focus(),
+    destroy: () => {
+      t?.unmount(), t = null, e = null;
+    }
+  };
+  return t = n.createRoot(r), t.render(
+    u.createElement(s, {
+      ...l,
+      onReady: (a) => {
+        e = a, l.onReady?.(o);
+      }
+    })
+  ), o;
 }
-//#endregion
-export { n as BunshipEditor, i as cloneValue, t as createDefaultValue, l as mountEditor, e as normalizeValue, r as valueToMarkdown };
+export {
+  s as BunshipEditor,
+  s as FullEditor,
+  V as cloneValue,
+  f as createDefaultValue,
+  i as mountEditor,
+  p as normalizeValue
+};

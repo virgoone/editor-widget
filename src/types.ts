@@ -1,24 +1,25 @@
-export type EditorLeaf = {
-  text: string;
-  bold?: boolean;
-  italic?: boolean;
-  underline?: boolean;
-  code?: boolean;
-  [key: string]: unknown;
-};
-
-export type EditorBlock = {
+export type EditorNode = {
+  type?: string;
   id?: string;
-  type: "p" | "h1" | "h2" | "h3" | "blockquote" | "code_block" | "ul" | "ol" | "li";
-  children: EditorLeaf[];
+  blockId?: string;
+  children?: EditorNode[];
+  text?: string;
   [key: string]: unknown;
 };
 
-export type EditorValue = EditorBlock[];
+export type EditorValue = EditorNode[];
+
+/** Kept for backwards compatibility with the 0.1.x lightweight widget API. */
+export type EditorLeaf = EditorNode;
+export type EditorBlock = EditorNode;
 
 export type UploadConfig = {
+  /** Better Upload API endpoint, e.g. `/api/media/upload`. */
   api?: string;
+  /** Base used to resolve the stored object URL, e.g. `/api/media/object`. */
   urlBase?: string;
+  /** Better Upload route name. @default 'commons' */
+  route?: string;
   credentials?: RequestCredentials;
   headers?: HeadersInit;
   getHeaders?: () => HeadersInit | Promise<HeadersInit>;
@@ -54,6 +55,7 @@ export type EditorOptions = {
   tokens?: EditorTokens;
   upload?: UploadConfig;
   ai?: AIConfig;
+  minHeight?: number;
   onChange?: (value: EditorValue) => void;
   onReady?: (api: EditorApi) => void;
 };
