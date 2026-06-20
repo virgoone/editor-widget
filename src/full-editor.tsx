@@ -1,6 +1,7 @@
 "use client";
 
 import "./editor-theme.css";
+import "./editor-soft.css";
 
 import { Editor, EditorContainer } from "@bunship-ai/editor/components/editor";
 import { EditorKit } from "@bunship-ai/editor/editor-kit";
@@ -105,7 +106,7 @@ export function FullEditor({
   return (
     <div
       className={cn(
-        "bwe-widget-root flex flex-col bg-background text-foreground",
+        "bwe-widget-root flex w-full max-w-full flex-col overflow-x-hidden bg-background text-foreground",
         isDark && "dark",
         className,
       )}
@@ -119,10 +120,13 @@ export function FullEditor({
             onChangeRef.current?.(next as never);
           }}
         >
-          <EditorContainer variant="default" className="min-h-0 flex-1">
+          <EditorContainer
+            variant="default"
+            className="min-h-0 w-full max-w-full flex-1 overflow-x-hidden"
+          >
             <Editor
               variant="none"
-              className="mx-auto w-full max-w-3xl px-6 pt-5 pb-24 text-base sm:px-8"
+              className="w-full max-w-full px-5 pt-4 pb-24 text-base sm:px-8"
               readOnly={readOnly}
               placeholder={placeholder}
             />

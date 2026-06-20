@@ -1,0 +1,82 @@
+/*
+ * Soft preset (shadcn/minimal style). Imported after editor-theme.css so it
+ * overrides the hard-edge "fluxship" defaults for the editor + its portals.
+ * Only touches borders / radius / shadows / label casing — never --background,
+ * so light/dark backgrounds keep working.
+ */
+[data-bunship-editor],
+.bwe-widget-root,
+[data-radix-popper-content-wrapper],
+[data-sonner-toaster] {
+  --radius: 0.5rem;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #a1a1aa;
+
+  --shadow-brutal-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-brutal: 0 4px 12px -2px rgb(0 0 0 / 0.08);
+  --shadow-brutal-hover: 0 8px 20px -4px rgb(0 0 0 / 0.12);
+
+  --ui-label-font-family: var(--font-sans);
+  --ui-label-font-weight: 600;
+  --ui-label-transform: none;
+  --ui-label-tracking-sm: 0;
+  --ui-label-tracking-md: 0;
+  --ui-label-tracking-lg: 0.01em;
+
+  --ui-control-radius: 0.5rem;
+  --ui-control-border-width: 1px;
+  --ui-control-shadow: none;
+
+  --ui-card-radius: 0.75rem;
+  --ui-card-border-width: 1px;
+  --ui-card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
+
+  --ui-overlay-radius: 0.75rem;
+  --ui-overlay-border-width: 1px;
+  --ui-overlay-shadow: 0 12px 32px -8px rgb(0 0 0 / 0.2);
+  --ui-overlay-inner-shadow: none;
+
+  --ui-menu-radius: 0.625rem;
+  --ui-menu-border-width: 1px;
+  --ui-menu-shadow: 0 12px 32px -8px rgb(0 0 0 / 0.2);
+  --ui-menu-item-border-width: 0px;
+
+  --ui-button-radius: 0.5rem;
+  --ui-button-border-width: 1px;
+  --ui-button-emphasis-border-width: 1px;
+  --ui-button-shadow: none;
+  --ui-button-emphasis-shadow: none;
+  --ui-button-emphasis-shadow-hover: none;
+  --ui-button-font-family: var(--font-sans);
+  --ui-button-letter-spacing: 0;
+  --ui-button-text-transform: none;
+  --ui-button-hover-translate-x: 0px;
+  --ui-button-hover-translate-y: 0px;
+  --ui-button-active-translate-x: 0px;
+  --ui-button-active-translate-y: 0px;
+
+  --ui-badge-radius: 0.5rem;
+  --ui-badge-border-width: 1px;
+  --ui-badge-text-transform: none;
+  --ui-badge-letter-spacing: 0;
+
+  --ui-field-radius: 0.5rem;
+  --ui-field-border-width: 1px;
+  --ui-field-shadow: none;
+
+  --ui-menu-label-text-transform: none;
+  --ui-menu-label-letter-spacing: 0.01em;
+
+  --editor-frame-radius: 0.625rem;
+  --editor-frame-border-width: 1px;
+  --editor-frame-shadow: none;
+  --editor-toolbar-radius: 0.625rem;
+  --editor-toolbar-border-width: 1px;
+  --editor-toolbar-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --editor-inline-code-radius: 0.375rem;
+  --editor-code-block-radius: 0.5rem;
+  --editor-code-block-border-width: 1px;
+  --editor-callout-radius: 0.5rem;
+  --editor-callout-border-width: 1px;
+}

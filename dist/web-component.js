@@ -1,7 +1,7 @@
 var c = Object.defineProperty;
 var m = (e, t, i) => t in e ? c(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i;
 var n = (e, t, i) => m(e, typeof t != "symbol" ? t + "" : t, i);
-import { n as p, a as l, c as b, r as f, F as g } from "./chunks/client-DGRgnPBO.js";
+import { n as p, a as l, c as b, r as f, F as g } from "./chunks/client-8b00-jdg.js";
 const y = "bunship-editor", r = "bunship-editor-widget-styles", a = "data-bunship-editor";
 let s = 0;
 function v() {
