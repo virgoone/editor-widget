@@ -13,15 +13,22 @@ import { cloneValue, normalizeValue } from "./value";
 
 const tagName = "bunship-editor";
 const STYLE_ID = "bunship-editor-widget-styles";
+const HOST_ATTR = "data-bunship-editor";
+
+let widgetInstances = 0;
 
 /**
- * The full Plate editor renders Radix/Plate portals (toolbars, menus,
- * popovers) to `document.body`, so the widget renders in the light DOM and
- * loads its compiled stylesheet (the sibling `style.css` produced by the
- * build) into `<head>` once. Shadow DOM would leave those portals unstyled.
+ * The full Plate editor renders Radix/Plate portals (toolbars, menus, popovers)
+ * to `document.body`, so the widget renders in light DOM and loads its compiled
+ * stylesheet into <head> while mounted. Design tokens are scoped to the
+ * `data-bunship-editor` attribute set on <body>, and both the stylesheet and the
+ * attribute are removed once the last editor unmounts — so the widget never
+ * restyles other pages of a single-page app.
  */
-function ensureStyles() {
+function mountStyles() {
   if (typeof document === "undefined") return;
+  widgetInstances += 1;
+  document.body.setAttribute(HOST_ATTR, "");
   if (document.getElementById(STYLE_ID)) return;
   try {
     const href = new URL("./style.css", import.meta.url).href;
@@ -33,6 +40,14 @@ function ensureStyles() {
   } catch {
     // import.meta.url unavailable (e.g. dev); styles are injected by the bundler.
   }
+}
+
+function unmountStyles() {
+  if (typeof document === "undefined") return;
+  widgetInstances = Math.max(0, widgetInstances - 1);
+  if (widgetInstances > 0) return;
+  document.getElementById(STYLE_ID)?.remove();
+  document.body.removeAttribute(HOST_ATTR);
 }
 
 class BunshipEditorElement extends HTMLElement {
@@ -53,7 +68,7 @@ class BunshipEditorElement extends HTMLElement {
   private currentValue: EditorValue | string | undefined;
 
   connectedCallback() {
-    ensureStyles();
+    mountStyles();
     if (!this.mountNode) {
       this.mountNode = document.createElement("div");
       this.mountNode.style.display = "block";
@@ -66,6 +81,7 @@ class BunshipEditorElement extends HTMLElement {
     this.root?.unmount();
     this.root = null;
     this.editorApi = null;
+    unmountStyles();
   }
 
   attributeChangedCallback() {
