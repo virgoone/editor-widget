@@ -1724,10 +1724,7 @@ html.dark [data-ui-theme='warm-terminal'] {
 
   /* Tailwind v4's Preflight drops the default `cursor: pointer` for
      interactive elements. Restore it for native <button>, <summary>,
-     [role="button"], and links with an explicit href so the whole app
-     doesn't need to remember to add `cursor-pointer`. Disabled controls
-     stay with default cursor. Utility classes (`cursor-default`,
-     `cursor-not-allowed`, etc.) still win because layer order. */
+     [role="button"], and links with an explicit href. */
   button:not(:disabled):not([aria-disabled='true']),
   [role='button']:not([aria-disabled='true']),
   summary,
@@ -1735,37 +1732,26 @@ html.dark [data-ui-theme='warm-terminal'] {
     cursor: pointer;
   }
 
-  html {
-    background-color: var(--background);
-  }
-
-  body {
-    @apply bg-background text-foreground;
+  /* Scope body-level resets to the editor root so the widget never restyles
+     the host page background, fonts, or selection color. */
+  .bwe-widget-root {
+    color: var(--foreground);
     font-family: var(--ui-body-font-family);
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-image: var(--ui-body-background-image);
-    background-size: var(--ui-body-background-size);
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  [data-typography='display'] {
+  .bwe-widget-root :is(h1, h2, h3, h4, h5, h6),
+  .bwe-widget-root [data-typography='display'] {
     font-family: var(--ui-heading-font-family);
     letter-spacing: -0.025em;
   }
 
-  code,
-  kbd,
-  pre,
-  .font-mono {
+  .bwe-widget-root :is(code, kbd, pre),
+  .bwe-widget-root .font-mono {
     font-family: var(--font-mono);
   }
 
-  ::selection {
+  .bwe-widget-root ::selection {
     background: var(--primary);
     color: var(--primary-foreground);
   }

@@ -1,7 +1,7 @@
 var a = Object.defineProperty;
 var h = (t, e, i) => e in t ? a(t, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[e] = i;
 var s = (t, e, i) => h(t, typeof e != "symbol" ? e + "" : e, i);
-import { n as c, a as u, c as p, r as m, F as b } from "./chunks/client-DeHBg55h.js";
+import { n as c, a as u, c as p, r as m, F as b } from "./chunks/client-B4hRd8ix.js";
 const g = "bunship-editor", l = "bunship-editor-widget-styles";
 function f() {
   if (!(typeof document > "u") && !document.getElementById(l))

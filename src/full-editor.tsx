@@ -104,7 +104,11 @@ export function FullEditor({
 
   return (
     <div
-      className={cn("bwe-widget-root text-foreground", isDark && "dark", className)}
+      className={cn(
+        "bwe-widget-root bg-background text-foreground",
+        isDark && "dark",
+        className,
+      )}
       data-style-preset={stylePreset}
       style={{ minHeight, ...accentStyle }}
     >
