@@ -105,7 +105,7 @@ export function FullEditor({
   return (
     <div
       className={cn(
-        "bwe-widget-root bg-background text-foreground",
+        "bwe-widget-root flex flex-col bg-background text-foreground",
         isDark && "dark",
         className,
       )}
@@ -119,9 +119,10 @@ export function FullEditor({
             onChangeRef.current?.(next as never);
           }}
         >
-          <EditorContainer variant="default" style={{ minHeight }}>
+          <EditorContainer variant="default" className="min-h-0 flex-1">
             <Editor
-              variant="default"
+              variant="none"
+              className="mx-auto w-full max-w-3xl px-6 pt-5 pb-24 text-base sm:px-8"
               readOnly={readOnly}
               placeholder={placeholder}
             />
