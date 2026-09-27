@@ -23,6 +23,8 @@ jobs:
           scope: "@virgoone"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
+      - name: Scan committed build artifacts
+        run: bun run check:secrets
       - run: bun test
       - run: bunx tsc -p tsconfig.drawings.json
       - run: bun run build

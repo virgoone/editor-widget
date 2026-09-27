@@ -45,7 +45,7 @@ async function l(i, n) {
   }
 }
 async function c(i) {
-  const { exportToSvg: n, restoreElements: t } = await import("./chunks/percentages-BXMCSKIN-BkyJl3sn.js").then((r) => r.i), e = await n({
+  const { exportToSvg: n, restoreElements: t } = await import("./chunks/percentages-BXMCSKIN-Ba7xEDnP.js").then((r) => r.i), e = await n({
     elements: t(i.elements ?? [], null),
     appState: { ...i.state, exportBackground: !0, exportWithDarkMode: !1 },
     files: i.files ?? {},

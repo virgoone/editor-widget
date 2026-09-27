@@ -140,3 +140,12 @@ Code drawings use Plate's native shape: `{ type: 'code_drawing', data: { drawing
 Mermaid, Graphviz, Flowchart and Excalidraw render in the browser. **PlantUML source is sent to the official `plantuml.com` rendering service**, as in Plate's default renderer. The editor displays that information when PlantUML is selected. Network or syntax failures keep the original source intact.
 
 Run `bun test` and `bun run build` before publishing the source and generated `dist` files together. Consumers should pin the complete commit SHA in CDN URLs; `drawings.js` and `web-component.js` must use the same release directory.
+
+
+## Build artifact checks
+
+The build removes the unused `VITE_APP_FIREBASE_CONFIG` field embedded in Excalidraw 0.18.0 before bundling. This is the upstream website's public Firebase configuration, not a host application credential. Other dependency settings remain intact. Both the editor and standalone SVG renderer continue to work locally.
+
+`bun run build` scans every generated file for Google API key patterns and fails if one is found. CI also scans the committed `dist` before rebuilding. `npm publish` rebuilds and runs the same check through `prepublishOnly`. To inspect existing artifacts without rebuilding, run `bun run check:secrets`. The scan reports only file paths and line numbers, never key values; it is a focused Google API key check, not a comprehensive secret scanner.
+
+Commit the regenerated `dist` with the source change. This cleanup does not remove copies in historical commits or previously pinned CDN URLs.

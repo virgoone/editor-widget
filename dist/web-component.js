@@ -2,7 +2,7 @@ var c = Object.defineProperty;
 var m = (e, t, i) => t in e ? c(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i;
 var n = (e, t, i) => m(e, typeof t != "symbol" ? t + "" : t, i);
 import { r as p } from "./chunks/extends-BgBmP6Lp.js";
-import { n as b, a as l, c as f, F as g } from "./chunks/client-3NbVp6eQ.js";
+import { n as b, a as l, c as f, F as g } from "./chunks/client-B1RyUHsm.js";
 const y = "bunship-editor", s = "bunship-editor-widget-styles", a = "data-bunship-editor";
 let r = 0;
 function v() {
