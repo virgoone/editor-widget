@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "src/drawings.ts",
+    "src/drawing-modules.d.ts",
+    "vendor/editor/components/code-drawing-node.tsx",
+    "vendor/editor/components/excalidraw-node.tsx",
+    "vendor/editor/plugins/drawing-kit.tsx"
+  ]
+}

@@ -120,6 +120,12 @@ const groups: Group[] = [
 			},
 			{
 				icon: <Code2 />,
+				keywords: ["diagram", "mermaid", "plantuml", "graphviz", "flowchart", "图表"],
+				label: "Code Drawing",
+				value: KEYS.codeDrawing,
+			},
+			{
+				icon: <Code2 />,
 				keywords: ["```"],
 				label: "Code Block",
 				value: KEYS.codeBlock,

@@ -83,6 +83,11 @@ const groups: Group[] = [
 			},
 			{
 				icon: <FileCodeIcon />,
+				label: "Code Drawing",
+				value: KEYS.codeDrawing,
+			},
+			{
+				icon: <FileCodeIcon />,
 				label: "Code",
 				value: KEYS.codeBlock,
 			},

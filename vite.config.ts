@@ -28,13 +28,14 @@ export default defineConfig({
     lib: {
       entry: {
         index: "src/index.ts",
+        drawings: "src/drawings.ts",
         "web-component": "src/web-component.ts",
       },
       formats: ["es"],
     },
     rollupOptions: {
       output: {
-        assetFileNames: "style.css",
+        assetFileNames: (asset) => asset.names?.some(name => name.endsWith(".css")) ? "style.css" : "assets/[name]-[hash][extname]",
         entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",
       },

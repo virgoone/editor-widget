@@ -23,6 +23,8 @@ jobs:
           scope: "@virgoone"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
+      - run: bun test
+      - run: bunx tsc -p tsconfig.drawings.json
       - run: bun run build
       - name: Verify tag matches package version
         if: startsWith(github.ref, 'refs/tags/v')

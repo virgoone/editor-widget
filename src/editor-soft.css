@@ -80,3 +80,16 @@
   --editor-callout-radius: 0.5rem;
   --editor-callout-border-width: 1px;
 }
+
+/* Diagram blocks use their own layout so host prose styles cannot affect them. */
+.bwe-widget-root .bwe-drawing { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1rem 0; }
+.bwe-drawing-toolbar { display: flex; justify-content: flex-end; gap: 8px; padding: 8px; }
+.bwe-drawing-toolbar select { background: var(--background); color: var(--foreground); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; }
+.bwe-drawing-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+.bwe-drawing-body[data-mode="Both"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.bwe-drawing-body textarea { display: block; resize: vertical; width: 100%; min-height: 300px; padding: 16px; font: 14px/1.7 monospace; background: transparent; color: inherit; white-space: pre; border: 0; border-top: 1px solid var(--border); }
+.bwe-drawing-preview { min-height: 200px; padding: 16px; display: flex; align-items: center; justify-content: center; overflow: auto; background: #fff; color: #555; }
+.bwe-drawing-preview img { max-width: 100%; height: auto; }
+.bwe-drawing-note { margin: 0; padding: 0 12px 8px; font-size: 12px; color: var(--muted-foreground); }
+.bwe-excalidraw { height: 500px; max-width: 100%; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+@media (max-width: 640px) { .bwe-drawing-body[data-mode="Both"] { grid-template-columns: minmax(0, 1fr); } .bwe-drawing-preview { order: -1; } .bwe-excalidraw { height: 420px; } }

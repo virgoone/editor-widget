@@ -1,29 +1,30 @@
-import { c as n, r as u, F as s } from "./chunks/client-8b00-jdg.js";
-import { a as V, b as f, n as p } from "./chunks/client-8b00-jdg.js";
-function i(r, l = {}) {
+import { c as n, F as u } from "./chunks/client-CAMWir_w.js";
+import { a as p, b as V, n as E } from "./chunks/client-CAMWir_w.js";
+import { r as s } from "./chunks/extends-BgBmP6Lp.js";
+function m(l, a = {}) {
   let t = null, e = null;
-  const o = {
+  const r = {
     getValue: () => e?.getValue() ?? [],
-    setValue: (a) => e?.setValue(a),
+    setValue: (o) => e?.setValue(o),
     focus: () => e?.focus(),
     destroy: () => {
       t?.unmount(), t = null, e = null;
     }
   };
-  return t = n.createRoot(r), t.render(
-    u.createElement(s, {
-      ...l,
-      onReady: (a) => {
-        e = a, l.onReady?.(o);
+  return t = n.createRoot(l), t.render(
+    s.createElement(u, {
+      ...a,
+      onReady: (o) => {
+        e = o, a.onReady?.(r);
       }
     })
-  ), o;
+  ), r;
 }
 export {
-  s as BunshipEditor,
-  s as FullEditor,
-  V as cloneValue,
-  f as createDefaultValue,
-  i as mountEditor,
-  p as normalizeValue
+  u as BunshipEditor,
+  u as FullEditor,
+  p as cloneValue,
+  V as createDefaultValue,
+  m as mountEditor,
+  E as normalizeValue
 };

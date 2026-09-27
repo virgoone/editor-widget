@@ -1,19 +1,20 @@
 var c = Object.defineProperty;
 var m = (e, t, i) => t in e ? c(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i;
 var n = (e, t, i) => m(e, typeof t != "symbol" ? t + "" : t, i);
-import { n as p, a as l, c as b, r as f, F as g } from "./chunks/client-8b00-jdg.js";
-const y = "bunship-editor", r = "bunship-editor-widget-styles", a = "data-bunship-editor";
-let s = 0;
+import { r as p } from "./chunks/extends-BgBmP6Lp.js";
+import { n as b, a as l, c as f, F as g } from "./chunks/client-CAMWir_w.js";
+const y = "bunship-editor", s = "bunship-editor-widget-styles", a = "data-bunship-editor";
+let r = 0;
 function v() {
-  if (!(typeof document > "u") && (s += 1, document.body.setAttribute(a, ""), !document.getElementById(r)))
+  if (!(typeof document > "u") && (r += 1, document.body.setAttribute(a, ""), !document.getElementById(s)))
     try {
       const e = new URL("./style.css", import.meta.url).href, t = document.createElement("link");
-      t.id = r, t.rel = "stylesheet", t.href = e, document.head.appendChild(t);
+      t.id = s, t.rel = "stylesheet", t.href = e, document.head.appendChild(t);
     } catch {
     }
 }
 function A() {
-  typeof document > "u" || (s = Math.max(0, s - 1), !(s > 0) && (document.getElementById(r)?.remove(), document.body.removeAttribute(a)));
+  typeof document > "u" || (r = Math.max(0, r - 1), !(r > 0) && (document.getElementById(s)?.remove(), document.body.removeAttribute(a)));
 }
 class h extends HTMLElement {
   constructor() {
@@ -33,7 +34,7 @@ class h extends HTMLElement {
     this.render();
   }
   get value() {
-    return this.editorApi?.getValue() ?? p(this.currentValue);
+    return this.editorApi?.getValue() ?? b(this.currentValue);
   }
   set value(i) {
     this.currentValue = i, this.editorApi ? this.editorApi.setValue(i) : this.render();
@@ -73,7 +74,7 @@ class h extends HTMLElement {
     };
   }
   render() {
-    !this.isConnected || !this.mountNode || (this.root ?? (this.root = b.createRoot(this.mountNode)), this.root.render(f.createElement(g, this.getOptions())));
+    !this.isConnected || !this.mountNode || (this.root ?? (this.root = f.createRoot(this.mountNode)), this.root.render(p.createElement(g, this.getOptions())));
   }
 }
 n(h, "observedAttributes", [

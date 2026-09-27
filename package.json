@@ -1,6 +1,6 @@
 {
   "name": "@virgoone/editor-widget",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Standalone Bunship editor widget (full Plate editor) with ESM and Web Component entrypoints.",
   "type": "module",
   "private": false,
@@ -18,7 +18,8 @@
     "./web-component": {
       "import": "./dist/web-component.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./drawings": "./dist/drawings.js"
   },
   "scripts": {
     "dev": "vite",
@@ -38,6 +39,7 @@
     "@ariakit/react": "^0.4.20",
     "@better-upload/client": "^3.0.4",
     "@emoji-mart/data": "1.2.1",
+    "@excalidraw/excalidraw": "0.18.0",
     "@faker-js/faker": "^10.1.0",
     "@hookform/resolvers": "^5.2.2",
     "@platejs/ai": "52.0.1",
@@ -47,6 +49,7 @@
     "@platejs/callout": "52.0.1",
     "@platejs/caption": "52.0.1",
     "@platejs/code-block": "52.0.1",
+    "@platejs/code-drawing": "52.3.0",
     "@platejs/combobox": "52.0.1",
     "@platejs/comment": "52.0.1",
     "@platejs/date": "52.0.1",
@@ -107,16 +110,19 @@
     "date-fns": "^4.1.0",
     "dedent": "1.7.0",
     "embla-carousel-react": "^8.6.0",
+    "flowchart.js": "1.18.0",
     "html2canvas-pro": "^1.5.13",
     "input-otp": "^1.4.2",
     "lodash": "^4.17.21",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.556.0",
+    "mermaid": "11.12.2",
     "motion": "^12.23.24",
     "nanoid": "^5.1.6",
     "next-themes": "^0.4.6",
     "pdf-lib": "^1.17.1",
-    "platejs": "52.0.1",
+    "plantuml-encoder": "1.4.0",
+    "platejs": "52.3.21",
     "react": "^19.2.0",
     "react-day-picker": "^9.11.2",
     "react-dnd": "^16.0.1",
@@ -136,6 +142,7 @@
     "tailwind-scrollbar-hide": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
     "use-file-picker": "2.1.2",
+    "viz.js": "2.1.2",
     "zod": "^4.1.13"
   },
   "devDependencies": {
