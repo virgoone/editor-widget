@@ -4,20 +4,19 @@ function o(i) {
   const e = t.getAttribute("viewBox")?.trim().split(/[\s,]+/).map(Number);
   return e?.length === 4 && e.every(Number.isFinite) && e[2] > 0 && e[3] > 0 && (t.setAttribute("width", String(e[2])), t.setAttribute("height", String(e[3]))), `data:image/svg+xml;charset=utf-8,${encodeURIComponent(new XMLSerializer().serializeToString(t))}`;
 }
-let s = Promise.resolve();
-async function l(i, n) {
+async function s(i, n) {
   if (!n.trim()) return "";
   if (n.length > 1e5) throw new Error("图表源码过长，请拆分图表");
   switch (i) {
     case "Mermaid": {
-      const t = s.then(async () => {
-        const { default: e } = await import("./chunks/mermaid.core-BgJgbWyA.js").then((a) => a.aj);
-        e.initialize({ startOnLoad: !1, securityLevel: "strict", theme: "default", suppressErrorRendering: !0 });
-        const { svg: r } = await e.render(`diagram-${crypto.randomUUID()}`, n);
-        return o(r);
+      const { renderAsync: t } = await import("./chunks/lazy-CehDEl4q.js").then((r) => r.l), { svg: e } = await t(n, {
+        // Fixed intrinsic dimensions keep SVG previews and downloads identical.
+        responsive: !1,
+        limit: 1e5,
+        links: !1,
+        images: !1
       });
-      return s = t.catch(() => {
-      }), t;
+      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(e)}`;
     }
     case "Graphviz": {
       const [{ default: t }, { Module: e, render: r }] = await Promise.all([import("./chunks/viz.es-CV8r5n5G.js"), import("./chunks/full.render-CepBzpzV.js").then((a) => a.f)]);
@@ -44,8 +43,8 @@ async function l(i, n) {
       throw new Error("不支持的图表格式");
   }
 }
-async function c(i) {
-  const { exportToSvg: n, restoreElements: t } = await import("./chunks/percentages-BXMCSKIN-Ba7xEDnP.js").then((r) => r.i), e = await n({
+async function l(i) {
+  const { exportToSvg: n, restoreElements: t } = await import("./chunks/percentages-BXMCSKIN-w8KgaW-L.js").then((r) => r.i), e = await n({
     elements: t(i.elements ?? [], null),
     appState: { ...i.state, exportBackground: !0, exportWithDarkMode: !1 },
     files: i.files ?? {},
@@ -54,6 +53,6 @@ async function c(i) {
   return o(e.outerHTML);
 }
 export {
-  l as renderDiagram,
-  c as renderExcalidraw
+  s as renderDiagram,
+  l as renderExcalidraw
 };

@@ -8,28 +8,27 @@ function svgUrl(svg: string) {
   if (root.localName !== 'svg') throw new Error('Invalid SVG');
   const box = root.getAttribute('viewBox')?.trim().split(/[\s,]+/).map(Number);
   if (box?.length === 4 && box.every(Number.isFinite) && box[2] > 0 && box[3] > 0) {
-    // Mermaid emits width="100%"; pin intrinsic dimensions before using <img>.
+    // Pin intrinsic dimensions before displaying renderer output as an image.
     root.setAttribute('width', String(box[2]));
     root.setAttribute('height', String(box[3]));
   }
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(new XMLSerializer().serializeToString(root))}`;
 }
-let mermaidQueue: Promise<unknown> = Promise.resolve();
 
 export async function renderDiagram(type: DrawingType, code: string): Promise<string> {
   if (!code.trim()) return '';
   if (code.length > 100_000) throw new Error('图表源码过长，请拆分图表');
   switch (type) {
     case 'Mermaid': {
-      // Mermaid has global DOM/config state: serialize renders across blocks.
-      const job = mermaidQueue.then(async () => {
-        const { default: mermaid } = await import('mermaid');
-        mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'default', suppressErrorRendering: true });
-        const { svg } = await mermaid.render(`diagram-${crypto.randomUUID()}`, code);
-        return svgUrl(svg);
+      const { renderAsync } = await import('pele/lazy');
+      const { svg } = await renderAsync(code, {
+        // Fixed intrinsic dimensions keep SVG previews and downloads identical.
+        responsive: false,
+        limit: 100_000,
+        links: false,
+        images: false,
       });
-      mermaidQueue = job.catch(() => {});
-      return job;
+      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     }
     case 'Graphviz': {
       const [{ default: Viz }, { Module, render }] = await Promise.all([import('viz.js'), import('viz.js/full.render.js')]);

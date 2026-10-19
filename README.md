@@ -137,6 +137,8 @@ const sketch = await renderExcalidraw(node.data);
 
 Code drawings use Plate's native shape: `{ type: 'code_drawing', data: { drawingType: 'Mermaid', drawingMode: 'Both', code: 'graph TD; A-->B' }, children: [{ text: '' }] }`. Excalidraw uses `{ type: 'excalidraw', data: { elements, state, files }, children: [{ text: '' }] }`.
 
+Mermaid syntax is rendered by Pele 1.6.0 via `pele/lazy`, which loads only the requested diagram type. Existing Mermaid code blocks and saved drawing data need no migration. Pele uses its own layout and default colors; Mermaid themes and `themeVariables`, arbitrary HTML labels, JavaScript callbacks, and external Mermaid plugins are not supported. SVG images retain intrinsic dimensions and have links and external images disabled. Excalidraw's separate text-to-drawing conversion still brings its own Mermaid dependency transitively.
+
 Mermaid, Graphviz, Flowchart and Excalidraw render in the browser. **PlantUML source is sent to the official `plantuml.com` rendering service**, as in Plate's default renderer. The editor displays that information when PlantUML is selected. Network or syntax failures keep the original source intact.
 
 Run `bun test` and `bun run build` before publishing the source and generated `dist` files together. Consumers should pin the complete commit SHA in CDN URLs; `drawings.js` and `web-component.js` must use the same release directory.
